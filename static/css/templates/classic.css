@@ -1,0 +1,58 @@
+/* Classic Template */
+.cv-document {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.cv-document .cv-header {
+    text-align: center;
+    border-bottom: 2px solid #1e293b;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.cv-document .cv-name {
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.cv-document .cv-title {
+    font-size: 16px;
+    font-style: italic;
+}
+
+.cv-document .cv-contact {
+    justify-content: center;
+}
+
+.cv-document .cv-contact span {
+    position: relative;
+}
+
+.cv-document .cv-contact span:not(:last-child)::after {
+    content: '|';
+    margin-left: 16px;
+    color: #cbd5e1;
+}
+
+.cv-document .cv-section-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 4px;
+    margin-bottom: 12px;
+}
+
+.cv-document .cv-item-title {
+    font-weight: bold;
+}
+
+.cv-document .cv-item-date {
+    font-style: italic;
+}
+
+.cv-document .cv-skills-list {
+    font-size: 14px;
+    line-height: 1.8;
+}

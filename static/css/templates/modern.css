@@ -1,0 +1,39 @@
+/* Modern Template */
+.cv-document.modern .cv-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 50px 60px;
+    margin: -50px -60px 30px -60px;
+}
+
+.cv-document.modern .cv-name {
+    color: white;
+    font-size: 40px;
+}
+
+.cv-document.modern .cv-title {
+    color: rgba(255,255,255,0.9);
+    font-size: 18px;
+}
+
+.cv-document.modern .cv-contact {
+    color: rgba(255,255,255,0.8);
+    margin-top: 20px;
+}
+
+.cv-document.modern .cv-contact i {
+    color: rgba(255,255,255,0.9);
+}
+
+.cv-document.modern .cv-section-title {
+    color: #667eea;
+    border-bottom: 3px solid #667eea;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+
+.cv-document.modern .cv-skill-tag {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}

@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ cv.title }} - Editor{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/editor.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/templates/' + cv.template + '.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="editor-wrapper">
+    <!-- Editor Header -->
+    <div class="editor-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary btn-sm me-3">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div>
+                    <input type="text" class="cv-title-input" id="cvTitle" value="{{ cv.title }}"
+                           placeholder="CV Title">
+                    <div class="save-status" id="saveStatus">
+                        <i class="fas fa-check-circle"></i> All changes saved
+                    </div>
+                </div>
+            </div>
+            <div class="editor-actions">
+                <select class="form-select form-select-sm d-inline-block w-auto me-2" id="templateSelect">
+                    {% for t in templates %}
+                    <option value="{{ t.name }}" {% if cv.template == t.name %}selected{% endif %}>
+                        {{ t.display_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-outline-primary btn-sm me-2" onclick="previewCV()">
+                    <i class="fas fa-eye me-1"></i>Preview
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="downloadPDF()">
+                    <i class="fas fa-download me-1"></i>Download PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Editor Body -->
+    <div class="editor-body">
+        <!-- Sidebar - Editor Form -->
+        <div class="editor-sidebar">
+            <div class="sidebar-content">
+                <!-- Personal Info -->
+                <div class="editor-section" data-section="personal">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h6><i class="fas fa-user me-2"></i>Personal Information</h6>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="section-content">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control form-control-sm"
+                                   data-field="personal.fullName" value="{{ content.personal.fullName }}"
+                                   placeholder="John Doe">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Job Title</label>
+                            <input type="text" class="form-control form-control-sm"
+                                   data-field="personal.title" value="{{ content.personal.title }}"
+                                   placeholder="e.g., Software Engineer">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control form-control-sm"
+                                   data-field="personal.email" value="{{ content.personal.email }}"
+                                   placeholder="you@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" class="form-control form-control-sm"
+                                   data-field="personal.phone" value="{{ content.personal.phone }}"
+                                   placeholder="+1 234 567 890">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Location</label>
+                            <input type="text" class="form-control form-control-sm"
+                                   data-field="personal.location" value="{{ content.personal.location }}"
+                                   placeholder="City, Country">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Website/Portfolio</label>
+                            <input type="url" class="form-control form-control-sm"
+                                   data-field="personal.website" value="{{ content.personal.website }}"
+                                   placeholder="https://yourwebsite.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Professional Summary</label>
+                            <textarea class="form-control form-control-sm" rows="4"
+                                      data-field="personal.summary"
+                                      placeholder="Brief overview of your professional background...">{{ content.personal.summary }}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience -->
+                <div class="editor-section" data-section="experience">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h6><i class="fas fa-briefcase me-2"></i>Experience</h6>
+                        <button type="button" class="btn btn-sm btn-link" onclick="addItem('experience', event)">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="section-content" id="experienceItems">
+                        <!-- Experience items will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="editor-section" data-section="education">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h6><i class="fas fa-graduation-cap me-2"></i>Education</h6>
+                        <button type="button" class="btn btn-sm btn-link" onclick="addItem('education', event)">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="section-content" id="educationItems">
+                        <!-- Education items will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Skills -->
+                <div class="editor-section" data-section="skills">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h6><i class="fas fa-tools me-2"></i>Skills</h6>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="section-content">
+                        <div class="mb-3">
+                            <label class="form-label">Skills (comma separated)</label>
+                            <textarea class="form-control form-control-sm" rows="3"
+                                      data-field="skills"
+                                      placeholder="e.g., Python, JavaScript, React, Node.js, SQL"
+                                      id="skillsInput">{{ content.skills|join(', ') if content.skills else '' }}</textarea>
+                            <div class="form-text">Enter skills separated by commas</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Languages -->
+                <div class="editor-section" data-section="languages">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h6><i class="fas fa-language me-2"></i>Languages</h6>
+                        <button type="button" class="btn btn-sm btn-link" onclick="addItem('languages', event)">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="section-content" id="languagesItems">
+                        <!-- Languages items will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Projects -->
+                <div class="editor-section" data-section="projects">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h6><i class="fas fa-project-diagram me-2"></i>Projects</h6>
+                        <button type="button" class="btn btn-sm btn-link" onclick="addItem('projects', event)">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="section-content" id="projectsItems">
+                        <!-- Projects items will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Area -->
+        <div class="editor-preview">
+            <div class="preview-container">
+                <div id="cvPreview" class="cv-document">
+                    <!-- CV content will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal fade" id="previewModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">CV Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modalPreview" class="cv-document"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="downloadPDF()">
+                    <i class="fas fa-download me-2"></i>Download PDF
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/editor.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ cv.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/templates/modern.css') }}">
+<style>
+    @media print {
+        .navbar, .footer { display: none !important; }
+        body { background: white !important; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="preview-page">
+    <div class="cv-container">
+        <div class="cv-document" id="cvDocument">
+            <!-- Header -->
+            <div class="cv-header">
+                <h1 class="cv-name">{{ content.personal.fullName }}</h1>
+                {% if content.personal.title %}
+                <p class="cv-title">{{ content.personal.title }}</p>
+                {% endif %}
+                <div class="cv-contact">
+                    {% if content.personal.email %}
+                    <span><i class="fas fa-envelope"></i> {{ content.personal.email }}</span>
+                    {% endif %}
+                    {% if content.personal.phone %}
+                    <span><i class="fas fa-phone"></i> {{ content.personal.phone }}</span>
+                    {% endif %}
+                    {% if content.personal.location %}
+                    <span><i class="fas fa-map-marker-alt"></i> {{ content.personal.location }}</span>
+                    {% endif %}
+                    {% if content.personal.website %}
+                    <span><i class="fas fa-globe"></i> {{ content.personal.website }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Summary -->
+            {% if content.personal.summary %}
+            <div class="cv-section">
+                <h2 class="cv-section-title">Profile</h2>
+                <p>{{ content.personal.summary }}</p>
+            </div>
+            {% endif %}
+
+            <!-- Experience -->
+            {% if content.experience %}
+            <div class="cv-section">
+                <h2 class="cv-section-title">Experience</h2>
+                <div class="cv-items">
+                    {% for exp in content.experience %}
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <div class="cv-item-title">{{ exp.position }}</div>
+                            <div class="cv-item-date">
+                                {% if exp.startDate %}{{ exp.startDate }}{% endif %}
+                                {% if exp.startDate or exp.endDate %} - {% endif %}
+                                {% if exp.endDate %}{{ exp.endDate }}{% else %}Present{% endif %}
+                            </div>
+                        </div>
+                        <div class="cv-item-subtitle">{{ exp.company }}</div>
+                        {% if exp.description %}
+                        <div class="cv-item-description">{{ exp.description }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Education -->
+            {% if content.education %}
+            <div class="cv-section">
+                <h2 class="cv-section-title">Education</h2>
+                <div class="cv-items">
+                    {% for edu in content.education %}
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <div class="cv-item-title">{{ edu.degree }}</div>
+                            <div class="cv-item-date">
+                                {% if edu.startYear %}{{ edu.startYear }}{% endif %}
+                                {% if edu.startYear or edu.endYear %} - {% endif %}
+                                {% if edu.endYear %}{{ edu.endYear }}{% else %}Present{% endif %}
+                            </div>
+                        </div>
+                        <div class="cv-item-subtitle">{{ edu.school }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Skills -->
+            {% if content.skills %}
+            <div class="cv-section">
+                <h2 class="cv-section-title">Skills</h2>
+                <div class="cv-skills-list">
+                    {% for skill in content.skills %}
+                    <span class="cv-skill-tag">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Languages -->
+            {% if content.languages %}
+            <div class="cv-section">
+                <h2 class="cv-section-title">Languages</h2>
+                <div class="cv-languages-list">
+                    {% for lang in content.languages %}
+                    <div class="cv-skill-item">
+                        <span class="cv-skill-name">{{ lang.name }}</span>
+                        <span class="cv-skill-level">{{ lang.level }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Projects -->
+            {% if content.projects %}
+            <div class="cv-section">
+                <h2 class="cv-section-title">Projects</h2>
+                <div class="cv-items">
+                    {% for proj in content.projects %}
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <div class="cv-item-title">
+                                {% if proj.url %}
+                                <a href="{{ proj.url }}" target="_blank">{{ proj.name }}</a>
+                                {% else %}
+                                {{ proj.name }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if proj.description %}
+                        <div class="cv-item-description">{{ proj.description }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if not preview %}
+    <div class="preview-actions">
+        <button class="btn btn-primary" onclick="window.print()">
+            <i class="fas fa-print me-2"></i>Print / Save as PDF
+        </button>
+        <a href="{{ url_for('edit_cv', cv_id=cv.id) }}" class="btn btn-secondary">
+            <i class="fas fa-edit me-2"></i>Edit
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
