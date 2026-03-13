@@ -4,6 +4,32 @@
     color: white;
     padding: 50px 60px;
     margin: -50px -60px 30px -60px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.cv-document.modern .cv-header-with-photo {
+    text-align: left;
+}
+
+.cv-document.modern .cv-photo-container {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid rgba(255,255,255,0.3);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.cv-document.modern .cv-photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cv-document.modern .cv-info {
+    flex: 1;
 }
 
 .cv-document.modern .cv-name {

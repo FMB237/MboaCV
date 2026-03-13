@@ -54,6 +54,28 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="section-content">
+                        <!-- Profile Photo Upload -->
+                        <div class="mb-3 text-center">
+                            <div class="photo-upload-container" id="photoContainer"
+                                 style="{% if content.personal.photo %}background-image: url('{{ content.personal.photo }}');{% endif %}"
+                                 onclick="document.getElementById('photoInput').click()">
+                                <div class="photo-placeholder" id="photoPlaceholder"
+                                     style="{% if content.personal.photo %}display: none;{% endif %}">
+                                    <i class="fas fa-camera"></i>
+                                    <span>Add Photo</span>
+                                </div>
+                                <div class="photo-overlay" id="photoOverlay">
+                                    <span><i class="fas fa-edit"></i> Change</span>
+                                </div>
+                            </div>
+                            <input type="file" id="photoInput" accept="image/*" style="display: none;"
+                                   onchange="uploadPhoto(this)">
+                            <button type="button" class="btn btn-sm btn-link text-danger mt-2"
+                                    id="removePhotoBtn" style="{% if not content.personal.photo %}display: none;{% endif %}"
+                                    onclick="removePhoto()">
+                                <i class="fas fa-trash me-1"></i>Remove Photo
+                            </button>
+                        </div>
                         <div class="mb-3">
                             <label class="form-label">Full Name</label>
                             <input type="text" class="form-control form-control-sm"

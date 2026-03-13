@@ -165,7 +165,8 @@ def create_cv():
             'phone': '',
             'location': '',
             'website': '',
-            'summary': ''
+            'summary': '',
+            'photo': None  # Profile picture URL
         },
         'experience': [],
         'education': [],
@@ -277,6 +278,80 @@ def get_templates():
         'display_name': t.display_name,
         'description': t.description
     } for t in templates])
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/cv/<int:cv_id>/upload-photo', methods=['POST'])
+@login_required
+def upload_photo(cv_id):
+    cv = CV.query.get_or_404(cv_id)
+    if cv.user_id != current_user.id:
+        return jsonify({'success': False, 'error': 'Access denied'}), 403
+
+    if 'photo' not in request.files:
+        return jsonify({'success': False, 'error': 'No file provided'}), 400
+
+    file = request.files['photo']
+    if file.filename == '':
+        return jsonify({'success': False, 'error': 'No file selected'}), 400
+
+    if file and allowed_file(file.filename):
+        # Create user-specific folder
+        user_folder = os.path.join(app.config['UPLOAD_FOLDER'], f'user_{current_user.id}')
+        os.makedirs(user_folder, exist_ok=True)
+
+        # Generate unique filename
+        ext = file.filename.rsplit('.', 1)[1].lower()
+        filename = f'cv_{cv_id}_photo.{ext}'
+        filepath = os.path.join(user_folder, filename)
+
+        # Remove old photo if exists
+        content = cv.get_content()
+        if content.get('personal', {}).get('photo'):
+            old_photo = os.path.join(app.root_path, content['personal']['photo'].lstrip('/'))
+            if os.path.exists(old_photo):
+                os.remove(old_photo)
+
+        # Save new photo
+        file.save(filepath)
+
+        # Update CV content with photo URL
+        if 'personal' not in content:
+            content['personal'] = {}
+        content['personal']['photo'] = f'/static/uploads/user_{current_user.id}/{filename}'
+        cv.set_content(content)
+        db.session.commit()
+
+        return jsonify({
+            'success': True,
+            'photo_url': content['personal']['photo']
+        })
+
+    return jsonify({'success': False, 'error': 'Invalid file type'}), 400
+
+@app.route('/cv/<int:cv_id>/remove-photo', methods=['POST'])
+@login_required
+def remove_photo(cv_id):
+    cv = CV.query.get_or_404(cv_id)
+    if cv.user_id != current_user.id:
+        return jsonify({'success': False, 'error': 'Access denied'}), 403
+
+    content = cv.get_content()
+    if content.get('personal', {}).get('photo'):
+        # Delete file
+        photo_path = os.path.join(app.root_path, content['personal']['photo'].lstrip('/'))
+        if os.path.exists(photo_path):
+            os.remove(photo_path)
+
+        # Remove from content
+        content['personal']['photo'] = None
+        cv.set_content(content)
+        db.session.commit()
+
+    return jsonify({'success': True})
 
 if __name__ == '__main__':
     with app.app_context():

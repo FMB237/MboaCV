@@ -17,25 +17,34 @@
     <div class="cv-container">
         <div class="cv-document" id="cvDocument">
             <!-- Header -->
-            <div class="cv-header">
-                <h1 class="cv-name">{{ content.personal.fullName }}</h1>
-                {% if content.personal.title %}
-                <p class="cv-title">{{ content.personal.title }}</p>
-                {% endif %}
-                <div class="cv-contact">
-                    {% if content.personal.email %}
-                    <span>{{ content.personal.email }}</span>
-                    {% endif %}
-                    {% if content.personal.phone %}
-                    <span>{{ content.personal.phone }}</span>
-                    {% endif %}
-                    {% if content.personal.location %}
-                    <span>{{ content.personal.location }}</span>
-                    {% endif %}
-                    {% if content.personal.website %}
-                    <span>{{ content.personal.website }}</span>
-                    {% endif %}
+            <div class="cv-header {% if content.personal.photo %}cv-header-with-photo{% endif %}">
+                {% if content.personal.photo %}
+                <div class="cv-photo-container">
+                    <img src="{{ content.personal.photo }}" alt="Profile Photo">
                 </div>
+                <div class="cv-info">
+                {% endif %}
+                    <h1 class="cv-name">{{ content.personal.fullName }}</h1>
+                    {% if content.personal.title %}
+                    <p class="cv-title">{{ content.personal.title }}</p>
+                    {% endif %}
+                    <div class="cv-contact">
+                        {% if content.personal.email %}
+                        <span>{{ content.personal.email }}</span>
+                        {% endif %}
+                        {% if content.personal.phone %}
+                        <span>{{ content.personal.phone }}</span>
+                        {% endif %}
+                        {% if content.personal.location %}
+                        <span>{{ content.personal.location }}</span>
+                        {% endif %}
+                        {% if content.personal.website %}
+                        <span>{{ content.personal.website }}</span>
+                        {% endif %}
+                    </div>
+                {% if content.personal.photo %}
+                </div>
+                {% endif %}
             </div>
 
             <!-- Summary -->
