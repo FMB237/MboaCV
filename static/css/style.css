@@ -379,11 +379,31 @@ main {
     margin: 0 auto;
 }
 
-/* Responsive */
+/* Responsive - Enhanced Mobile Support */
+@media (max-width: 992px) {
+    .hero-section {
+        min-height: auto;
+        padding: 60px 0;
+    }
+
+    .cv-preview-container {
+        margin-top: 40px;
+    }
+
+    .cv-preview-card {
+        transform: rotate(0deg);
+        max-width: 250px;
+    }
+}
+
 @media (max-width: 768px) {
     .hero-section {
         text-align: center;
         padding-top: 40px;
+    }
+
+    .hero-section h1 {
+        font-size: 2rem;
     }
 
     .cv-preview-container {
@@ -394,6 +414,94 @@ main {
         left: 10px;
         right: 10px;
         max-width: none;
+    }
+
+    /* Navigation improvements */
+    .navbar .container {
+        padding: 0 16px;
+    }
+
+    /* Dashboard cards on mobile */
+    .cv-card {
+        margin-bottom: 16px;
+    }
+
+    .cv-card-header {
+        padding: 16px;
+    }
+
+    .cv-card-preview {
+        padding: 16px;
+    }
+
+    /* Form improvements for touch */
+    .form-control-lg, .form-select-lg {
+        min-height: 48px;
+        font-size: 16px; /* Prevents iOS zoom */
+    }
+
+    /* Template options in modal */
+    .template-label {
+        flex-direction: column;
+        text-align: center;
+        padding: 12px;
+    }
+
+    .template-mini {
+        margin-right: 0;
+        margin-bottom: 8px;
+    }
+
+    /* Auth pages */
+    .auth-card {
+        margin: 20px;
+    }
+
+    /* Preview page */
+    .preview-page {
+        padding: 20px 16px;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 20px 16px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section h1 {
+        font-size: 1.75rem;
+    }
+
+    .feature-card {
+        padding: 20px;
+    }
+
+    .template-preview-card {
+        margin-bottom: 16px;
+    }
+
+    /* Better button sizing for mobile */
+    .btn-lg {
+        padding: 14px 24px;
+        font-size: 16px;
+    }
+
+    /* Navbar brand */
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+
+    /* Card footer buttons */
+    .cv-card-footer .btn {
+        width: 100%;
+    }
+
+    /* Preview actions */
+    .preview-actions .btn {
+        width: 100%;
+        margin-bottom: 8px;
     }
 }
 

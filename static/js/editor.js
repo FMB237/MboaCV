@@ -455,10 +455,19 @@ function renderCV() {
         `).join('');
     }
 
-    // Build full CV HTML
-    preview.innerHTML = `
-        <div class="cv-page">
-            <div class="cv-header">
+    // Build profile photo HTML
+    const photoHTML = personal.photo ? `
+        <div class="cv-photo-container">
+            <img src="${personal.photo}" alt="Profile Photo">
+        </div>
+    ` : '';
+
+    // Build header with optional photo
+    const hasPhoto = !!personal.photo;
+    const headerHTML = hasPhoto ? `
+        <div class="cv-header cv-header-with-photo">
+            ${photoHTML}
+            <div class="cv-info">
                 <h1 class="cv-name">${escapeHtml(personal.fullName || '')}</h1>
                 ${personal.title ? `<p class="cv-title">${escapeHtml(personal.title)}</p>` : ''}
                 <div class="cv-contact">
@@ -468,6 +477,24 @@ function renderCV() {
                     ${personal.website ? `<span><i class="fas fa-globe"></i> ${escapeHtml(personal.website)}</span>` : ''}
                 </div>
             </div>
+        </div>
+    ` : `
+        <div class="cv-header">
+            <h1 class="cv-name">${escapeHtml(personal.fullName || '')}</h1>
+            ${personal.title ? `<p class="cv-title">${escapeHtml(personal.title)}</p>` : ''}
+            <div class="cv-contact">
+                ${personal.email ? `<span><i class="fas fa-envelope"></i> ${escapeHtml(personal.email)}</span>` : ''}
+                ${personal.phone ? `<span><i class="fas fa-phone"></i> ${escapeHtml(personal.phone)}</span>` : ''}
+                ${personal.location ? `<span><i class="fas fa-map-marker-alt"></i> ${escapeHtml(personal.location)}</span>` : ''}
+                ${personal.website ? `<span><i class="fas fa-globe"></i> ${escapeHtml(personal.website)}</span>` : ''}
+            </div>
+        </div>
+    `;
+
+    // Build full CV HTML
+    preview.innerHTML = `
+        <div class="cv-page">
+            ${headerHTML}
 
             ${personal.summary ? `
             <div class="cv-section">
@@ -543,6 +570,85 @@ function previewCV() {
             modal.show();
         }
     }
+}
+
+// Photo Upload Functions
+function uploadPhoto(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    const cvId = window.location.pathname.match(/\/cv\/(\d+)\//)?.[1];
+    if (!cvId) return;
+
+    const formData = new FormData();
+    formData.append('photo', file);
+
+    // Show loading state
+    const container = document.getElementById('photoContainer');
+    container.style.opacity = '0.5';
+
+    fetch(`/cv/${cvId}/upload-photo`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update cvData
+            if (!cvData.personal) cvData.personal = {};
+            cvData.personal.photo = data.photo_url;
+
+            // Update UI
+            container.style.backgroundImage = `url('${data.photo_url}')`;
+            container.style.opacity = '1';
+            document.getElementById('photoPlaceholder').style.display = 'none';
+            document.getElementById('removePhotoBtn').style.display = 'inline-block';
+
+            // Update CV preview
+            renderCV();
+        } else {
+            alert('Failed to upload photo: ' + data.error);
+            container.style.opacity = '1';
+        }
+    })
+    .catch(error => {
+        console.error('Error uploading photo:', error);
+        alert('Error uploading photo. Please try again.');
+        container.style.opacity = '1';
+    });
+}
+
+function removePhoto() {
+    if (!confirm('Are you sure you want to remove your photo?')) return;
+
+    const cvId = window.location.pathname.match(/\/cv\/(\d+)\//)?.[1];
+    if (!cvId) return;
+
+    fetch(`/cv/${cvId}/remove-photo`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update cvData
+            if (cvData.personal) cvData.personal.photo = null;
+
+            // Update UI
+            const container = document.getElementById('photoContainer');
+            container.style.backgroundImage = '';
+            document.getElementById('photoPlaceholder').style.display = 'flex';
+            document.getElementById('removePhotoBtn').style.display = 'none';
+
+            // Update CV preview
+            renderCV();
+        }
+    })
+    .catch(error => {
+        console.error('Error removing photo:', error);
+    });
 }
 
 // Download PDF

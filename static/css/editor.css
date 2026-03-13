@@ -202,10 +202,98 @@
     font-size: 12px;
 }
 
+/* Photo Upload Styles */
+.photo-upload-container {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px dashed #d1d5db;
+    background-color: #f9fafb;
+    background-size: cover;
+    background-position: center;
+    margin: 0 auto;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+    overflow: hidden;
+}
+
+.photo-upload-container:hover {
+    border-color: #2563eb;
+    background-color: #eff6ff;
+}
+
+.photo-upload-container:hover .photo-overlay {
+    opacity: 1;
+}
+
+.photo-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.photo-placeholder i {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    color: white;
+    font-size: 12px;
+}
+
+.photo-overlay span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
 /* CV Document Styles */
 .cv-page {
     padding: 50px 60px;
     min-height: 1123px;
+}
+
+/* Profile Photo in CV */
+.cv-photo-container {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 3px solid #e2e8f0;
+}
+
+.cv-photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cv-header-with-photo {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.cv-header-with-photo .cv-info {
+    flex: 1;
 }
 
 .cv-document .cv-header {
@@ -338,40 +426,148 @@
     }
 
     .cv-document {
-        transform: scale(0.85);
+        transform: scale(0.9);
         transform-origin: top center;
     }
 }
 
+@media (max-width: 992px) {
+    .editor-sidebar {
+        width: 280px;
+    }
+
+    .cv-document {
+        transform: scale(0.75);
+    }
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
+    .editor-wrapper {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .editor-header {
+        padding: 10px 16px;
+        position: sticky;
+        top: 0;
+    }
+
+    .editor-header .d-flex {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch !important;
+    }
+
+    .editor-header .d-flex > div:first-child {
+        order: 1;
+    }
+
+    .editor-actions {
+        order: 2;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: flex-start;
+    }
+
+    .cv-title-input {
+        width: 100%;
+        font-size: 16px;
+    }
+
     .editor-body {
         flex-direction: column;
     }
 
     .editor-sidebar {
         width: 100%;
-        height: 50%;
+        height: auto;
+        max-height: 60vh;
         border-right: none;
         border-bottom: 1px solid #e2e8f0;
+        order: 1;
     }
 
     .editor-preview {
-        height: 50%;
-        padding: 20px;
+        flex: none;
+        height: auto;
+        min-height: 500px;
+        padding: 20px 10px;
+        order: 2;
     }
 
     .cv-document {
-        transform: scale(0.6);
+        transform: scale(0.45);
+        transform-origin: top center;
+        margin: 0 auto;
     }
 
-    .cv-title-input {
-        width: 200px;
+    .sidebar-content {
+        padding: 16px;
+    }
+
+    .section-content {
+        padding: 12px;
+    }
+
+    .photo-upload-container {
+        width: 100px;
+        height: 100px;
+    }
+
+    /* Touch-friendly buttons */
+    .btn-sm {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+
+    /* Better form inputs for mobile */
+    .form-control-sm {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 12px;
+        min-height: 44px;
+    }
+
+    /* Template options */
+    .template-option label {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .template-mini {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .cv-document {
+        transform: scale(0.38);
+    }
+
+    .editor-header {
+        padding: 8px 12px;
     }
 
     .editor-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
+        justify-content: center;
+    }
+
+    .editor-actions .btn {
+        flex: 1;
+        min-width: 100px;
+    }
+
+    .photo-upload-container {
+        width: 90px;
+        height: 90px;
+    }
+
+    .cv-page {
+        padding: 30px;
     }
 }
 
