@@ -21,38 +21,43 @@ A simple, full-featured CV/Resume builder built with Flask, HTML/CSS/JS. Create 
 ## Project Structure
 
 ```
-cv_platform/
+MboaCV/
 ├── app.py                 # Main Flask application
 ├── requirements.txt       # Python dependencies
-├── README.md             # This file
-├── templates/            # Jinja2 templates
-│   ├── base.html        # Base layout
-│   ├── landing.html     # Home page
-│   ├── login.html       # Login page
-│   ├── register.html    # Registration page
-│   ├── dashboard.html   # User dashboard
-│   ├── editor.html      # CV editor
-│   └── templates/       # CV templates
-│       ├── modern.html
+├── README.md              # This file
+├── instance/              # Flask instance folder (e.g., SQLite database)
+├── venv/                  # Python virtual environment
+├── templates/             # Jinja2 templates
+│   ├── base.html          # Base layout
+│   ├── dashboard.html     # User dashboard
+│   ├── editor.html        # CV editor
+│   ├── landing.html       # Home page
+│   ├── login.html         # Login page
+│   ├── register.html      # Registration page
+│   └── templates/         # CV layout templates (Modern, Classic, Minimal)
 │       ├── classic.html
-│       └── minimal.html
-└── static/              # Static assets
+│       ├── minimal.html
+│       └── modern.html
+└── static/                # Static assets (CSS, JS, uploads)
     ├── css/
-    │   ├── style.css    # Main styles
-    │   ├── editor.css   # Editor-specific styles
-    │   └── templates/   # Template-specific styles
-    │       ├── modern.css
+    │   ├── editor.css     # Editor-specific styles
+    │   ├── style.css      # Main application styles
+    │   └── templates/     # Template-specific CSS styles
     │       ├── classic.css
-    │       └── minimal.css
-    └── js/
-        └── editor.js    # Editor functionality
+    │       ├── minimal.css
+    │       └── modern.css
+    ├── js/
+    │   └── editor.js      # Editor functionality
+    └── uploads/           # User-uploaded files (e.g., CV photos)
+        └── user_1/        # Example user upload directory
+            └── cv_1_photo.jpeg
 ```
 
 ## Installation
 
 1. **Clone or download the project**:
 ```bash
-cd cv_platform
+cd MboaCV
 ```
 
 2. **Create a virtual environment** (recommended):
