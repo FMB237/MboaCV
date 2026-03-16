@@ -25,7 +25,6 @@ MboaCV/
 ├── app.py                 # Main Flask application
 ├── requirements.txt       # Python dependencies
 ├── README.md              # This file
-├── .git/                  # Git version control
 ├── instance/              # Flask instance folder (e.g., SQLite database)
 ├── venv/                  # Python virtual environment
 ├── templates/             # Jinja2 templates
