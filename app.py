@@ -104,7 +104,7 @@ def create_admin_user():
         admin = User(
             email=admin_email,
             password_hash=generate_password_hash('admin123'),
-            full_name='Fouenang Miguel Bruce',
+            full_name='Admin',
             is_admin=True
         )
         db.session.add(admin)
