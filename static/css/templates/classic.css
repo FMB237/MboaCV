@@ -1,6 +1,6 @@
 /* Classic Template - Enhanced with Professional Colors */
 .cv-document {
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: "Georgia", "Times New Roman", serif;
     --classic-primary: #1e3a5f;
     --classic-accent: #c9a227;
     --classic-secondary: #4a6fa5;
@@ -18,7 +18,7 @@
 }
 
 .cv-document .cv-header::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -3px;
     left: 50%;
@@ -90,7 +90,7 @@
 }
 
 .cv-document .cv-contact span:not(:last-child)::after {
-    content: '|';
+    content: "|";
     margin-left: 12px;
     color: var(--classic-accent);
 }
@@ -119,7 +119,7 @@
 }
 
 .cv-document .cv-section-title::before {
-    content: '◆';
+    content: "◆";
     color: var(--classic-accent);
     font-size: 10px;
 }
@@ -170,7 +170,11 @@
 }
 
 .cv-document .cv-skill-tag {
-    background: linear-gradient(135deg, var(--classic-primary) 0%, var(--classic-secondary) 100%);
+    background: linear-gradient(
+        135deg,
+        var(--classic-primary) 0%,
+        var(--classic-secondary) 100%
+    );
     color: white;
     padding: 5px 14px;
     border-radius: 3px;

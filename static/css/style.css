@@ -68,7 +68,7 @@ main {
 .cv-preview-card {
     background: white;
     border-radius: 10px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     max-width: 300px;
     margin: 0 auto;
     transform: rotate(3deg);
@@ -90,7 +90,7 @@ main {
 .cv-avatar {
     width: 60px;
     height: 60px;
-    background: rgba(255,255,255,0.3);
+    background: rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     margin: 0 auto 10px;
 }
@@ -152,13 +152,15 @@ main {
     border-radius: 12px;
     padding: 30px;
     text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition:
+        transform 0.3s,
+        box-shadow 0.3s;
     border: 1px solid var(--border-color);
 }
 
 .feature-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .feature-icon {
@@ -182,7 +184,7 @@ main {
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
 }
 
@@ -197,7 +199,7 @@ main {
 }
 
 .modern-preview::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 20px;
     left: 20px;
@@ -208,7 +210,7 @@ main {
 }
 
 .classic-preview::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 20px;
     left: 20px;
@@ -219,7 +221,7 @@ main {
 }
 
 .minimal-preview::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 20px;
     left: 20px;
@@ -233,14 +235,16 @@ main {
 .cv-card {
     background: white;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
 }
 
 .cv-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .cv-card-header {
@@ -435,7 +439,8 @@ main {
     }
 
     /* Form improvements for touch */
-    .form-control-lg, .form-select-lg {
+    .form-control-lg,
+    .form-select-lg {
         min-height: 48px;
         font-size: 16px; /* Prevents iOS zoom */
     }
@@ -526,13 +531,15 @@ main {
 .admin-card {
     border: none;
     border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
 }
 
 .admin-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 }
 
 .admin-stat-icon {

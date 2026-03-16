@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <!-- Hero Section -->
 <section class="hero-section py-5">
     <div class="container py-5">
@@ -11,19 +9,29 @@
                     <span class="text-primary">in Minutes</span>
                 </h1>
                 <p class="lead mb-4">
-                    Build stunning, professional resumes with our easy-to-use CV builder.
-                    Choose from multiple templates and export as PDF instantly.
+                    Build stunning, professional resumes with our easy-to-use CV
+                    builder. Choose from multiple templates and export as PDF
+                    instantly.
                 </p>
                 <div class="d-flex gap-3">
-                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-4">
+                    <a
+                        href="{{ url_for('register') }}"
+                        class="btn btn-primary btn-lg px-4"
+                    >
                         <i class="fas fa-rocket me-2"></i>Get Started Free
                     </a>
-                    <a href="#features" class="btn btn-outline-primary btn-lg px-4">
+                    <a
+                        href="#features"
+                        class="btn btn-outline-primary btn-lg px-4"
+                    >
                         Learn More
                     </a>
                 </div>
                 <div class="mt-4 text-muted">
-                    <small><i class="fas fa-check-circle text-success me-1"></i> No credit card required</small>
+                    <small
+                        ><i class="fas fa-check-circle text-success me-1"></i>
+                        No credit card required</small
+                    >
                 </div>
             </div>
             <div class="col-lg-6">
@@ -38,15 +46,23 @@
                             <div class="cv-section">
                                 <div class="cv-section-title">Experience</div>
                                 <div class="cv-item">
-                                    <div class="cv-item-title">Senior Developer</div>
-                                    <div class="cv-item-subtitle">Tech Company Inc.</div>
+                                    <div class="cv-item-title">
+                                        Senior Developer
+                                    </div>
+                                    <div class="cv-item-subtitle">
+                                        Tech Company Inc.
+                                    </div>
                                 </div>
                             </div>
                             <div class="cv-section">
                                 <div class="cv-section-title">Education</div>
                                 <div class="cv-item">
-                                    <div class="cv-item-title">BS Computer Science</div>
-                                    <div class="cv-item-subtitle">University Name</div>
+                                    <div class="cv-item-title">
+                                        BS Computer Science
+                                    </div>
+                                    <div class="cv-item-subtitle">
+                                        University Name
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +78,9 @@
     <div class="container py-5">
         <div class="text-center mb-5">
             <h2 class="fw-bold">Why Choose Our CV Builder?</h2>
-            <p class="text-muted">Everything you need to create the perfect resume</p>
+            <p class="text-muted">
+                Everything you need to create the perfect resume
+            </p>
         </div>
         <div class="row g-4">
             <div class="col-md-4">
@@ -71,7 +89,10 @@
                         <i class="fas fa-palette"></i>
                     </div>
                     <h4>Beautiful Templates</h4>
-                    <p class="text-muted">Choose from professionally designed templates that stand out.</p>
+                    <p class="text-muted">
+                        Choose from professionally designed templates that stand
+                        out.
+                    </p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -80,7 +101,9 @@
                         <i class="fas fa-bolt"></i>
                     </div>
                     <h4>Instant Preview</h4>
-                    <p class="text-muted">See changes in real-time as you build your CV.</p>
+                    <p class="text-muted">
+                        See changes in real-time as you build your CV.
+                    </p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -89,7 +112,9 @@
                         <i class="fas fa-download"></i>
                     </div>
                     <h4>PDF Export</h4>
-                    <p class="text-muted">Download your CV as a high-quality PDF with one click.</p>
+                    <p class="text-muted">
+                        Download your CV as a high-quality PDF with one click.
+                    </p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -98,7 +123,10 @@
                         <i class="fas fa-save"></i>
                     </div>
                     <h4>Auto-Save</h4>
-                    <p class="text-muted">Your progress is automatically saved so you never lose work.</p>
+                    <p class="text-muted">
+                        Your progress is automatically saved so you never lose
+                        work.
+                    </p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -107,7 +135,9 @@
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <h4>Mobile Friendly</h4>
-                    <p class="text-muted">Create and edit your CV on any device, anywhere.</p>
+                    <p class="text-muted">
+                        Create and edit your CV on any device, anywhere.
+                    </p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -116,7 +146,10 @@
                         <i class="fas fa-lock"></i>
                     </div>
                     <h4>Secure</h4>
-                    <p class="text-muted">Your data is secure and private. We never share your information.</p>
+                    <p class="text-muted">
+                        Your data is secure and private. We never share your
+                        information.
+                    </p>
                 </div>
             </div>
         </div>
@@ -136,7 +169,9 @@
                     <div class="template-image modern-preview"></div>
                     <div class="p-3">
                         <h5>Modern</h5>
-                        <p class="text-muted small">Clean and contemporary design</p>
+                        <p class="text-muted small">
+                            Clean and contemporary design
+                        </p>
                     </div>
                 </div>
             </div>
@@ -145,7 +180,9 @@
                     <div class="template-image classic-preview"></div>
                     <div class="p-3">
                         <h5>Classic</h5>
-                        <p class="text-muted small">Traditional professional style</p>
+                        <p class="text-muted small">
+                            Traditional professional style
+                        </p>
                     </div>
                 </div>
             </div>
@@ -154,7 +191,9 @@
                     <div class="template-image minimal-preview"></div>
                     <div class="p-3">
                         <h5>Minimal</h5>
-                        <p class="text-muted small">Simple and elegant layout</p>
+                        <p class="text-muted small">
+                            Simple and elegant layout
+                        </p>
                     </div>
                 </div>
             </div>
@@ -166,7 +205,9 @@
 <section class="py-5 bg-primary text-white">
     <div class="container py-5 text-center">
         <h2 class="fw-bold mb-4">Ready to Build Your CV?</h2>
-        <p class="lead mb-4">Join thousands of job seekers who have created professional resumes</p>
+        <p class="lead mb-4">
+            Join thousands of job seekers who have created professional resumes
+        </p>
         <a href="{{ url_for('register') }}" class="btn btn-light btn-lg px-5">
             Start Building Now
         </a>

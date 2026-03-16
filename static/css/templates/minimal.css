@@ -1,6 +1,7 @@
 /* Minimal Template - Enhanced with Subtle Colors */
 .cv-document {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --minimal-primary: #0f766e;
     --minimal-accent: #f59e0b;
     --minimal-rose: #e11d48;
@@ -85,7 +86,7 @@
 }
 
 .cv-document .cv-contact span::before {
-    content: '•';
+    content: "•";
     margin-right: 8px;
     color: var(--minimal-accent);
 }
@@ -117,10 +118,14 @@
 }
 
 .cv-document .cv-section-title::after {
-    content: '';
+    content: "";
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, var(--minimal-accent) 0%, transparent 100%);
+    background: linear-gradient(
+        90deg,
+        var(--minimal-accent) 0%,
+        transparent 100%
+    );
 }
 
 .cv-document .cv-item {

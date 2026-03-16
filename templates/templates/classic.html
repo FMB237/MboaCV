@@ -1,29 +1,37 @@
-{% extends 'base.html' %}
-
-{% block title %}{{ cv.title }}{% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/templates/classic.css') }}">
+{% extends 'base.html' %} {% block title %}{{ cv.title }}{% endblock %} {% block
+extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/templates/classic.css') }}"
+/>
 <style>
     @media print {
-        .navbar, .footer { display: none !important; }
-        body { background: white !important; }
+        .navbar,
+        .footer {
+            display: none !important;
+        }
+        body {
+            background: white !important;
+        }
     }
 </style>
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 <div class="preview-page">
     <div class="cv-container">
         <div class="cv-document" id="cvDocument">
             <!-- Header -->
-            <div class="cv-header {% if content.personal.photo %}cv-header-with-photo{% endif %}">
+            <div
+                class="cv-header {% if content.personal.photo %}cv-header-with-photo{% endif %}"
+            >
                 {% if content.personal.photo %}
                 <div class="cv-photo-container">
-                    <img src="{{ content.personal.photo }}" alt="Profile Photo">
+                    <img
+                        src="{{ content.personal.photo }}"
+                        alt="Profile Photo"
+                    />
                 </div>
                 <div class="cv-info">
-                {% endif %}
+                    {% endif %}
                     <h1 class="cv-name">{{ content.personal.fullName }}</h1>
                     {% if content.personal.title %}
                     <p class="cv-title">{{ content.personal.title }}</p>
@@ -31,18 +39,15 @@
                     <div class="cv-contact">
                         {% if content.personal.email %}
                         <span>{{ content.personal.email }}</span>
-                        {% endif %}
-                        {% if content.personal.phone %}
+                        {% endif %} {% if content.personal.phone %}
                         <span>{{ content.personal.phone }}</span>
-                        {% endif %}
-                        {% if content.personal.location %}
+                        {% endif %} {% if content.personal.location %}
                         <span>{{ content.personal.location }}</span>
-                        {% endif %}
-                        {% if content.personal.website %}
+                        {% endif %} {% if content.personal.website %}
                         <span>{{ content.personal.website }}</span>
                         {% endif %}
                     </div>
-                {% if content.personal.photo %}
+                    {% if content.personal.photo %}
                 </div>
                 {% endif %}
             </div>
@@ -65,14 +70,17 @@
                         <div class="cv-item-header">
                             <div class="cv-item-title">{{ exp.position }}</div>
                             <div class="cv-item-date">
-                                {% if exp.startDate %}{{ exp.startDate }}{% endif %}
-                                {% if exp.startDate or exp.endDate %} - {% endif %}
-                                {% if exp.endDate %}{{ exp.endDate }}{% else %}Present{% endif %}
+                                {% if exp.startDate %}{{ exp.startDate }}{%
+                                endif %} {% if exp.startDate or exp.endDate %} -
+                                {% endif %} {% if exp.endDate %}{{ exp.endDate
+                                }}{% else %}Present{% endif %}
                             </div>
                         </div>
                         <div class="cv-item-subtitle">{{ exp.company }}</div>
                         {% if exp.description %}
-                        <div class="cv-item-description">{{ exp.description }}</div>
+                        <div class="cv-item-description">
+                            {{ exp.description }}
+                        </div>
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -90,9 +98,10 @@
                         <div class="cv-item-header">
                             <div class="cv-item-title">{{ edu.degree }}</div>
                             <div class="cv-item-date">
-                                {% if edu.startYear %}{{ edu.startYear }}{% endif %}
-                                {% if edu.startYear or edu.endYear %} - {% endif %}
-                                {% if edu.endYear %}{{ edu.endYear }}{% else %}Present{% endif %}
+                                {% if edu.startYear %}{{ edu.startYear }}{%
+                                endif %} {% if edu.startYear or edu.endYear %} -
+                                {% endif %} {% if edu.endYear %}{{ edu.endYear
+                                }}{% else %}Present{% endif %}
                             </div>
                         </div>
                         <div class="cv-item-subtitle">{{ edu.school }}</div>
@@ -137,14 +146,16 @@
                         <div class="cv-item-header">
                             <div class="cv-item-title">
                                 {% if proj.url %}
-                                <a href="{{ proj.url }}" target="_blank">{{ proj.name }}</a>
-                                {% else %}
-                                {{ proj.name }}
-                                {% endif %}
+                                <a href="{{ proj.url }}" target="_blank"
+                                    >{{ proj.name }}</a
+                                >
+                                {% else %} {{ proj.name }} {% endif %}
                             </div>
                         </div>
                         {% if proj.description %}
-                        <div class="cv-item-description">{{ proj.description }}</div>
+                        <div class="cv-item-description">
+                            {{ proj.description }}
+                        </div>
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -159,7 +170,10 @@
         <button class="btn btn-primary" onclick="window.print()">
             <i class="fas fa-print me-2"></i>Print / Save as PDF
         </button>
-        <a href="{{ url_for('edit_cv', cv_id=cv.id) }}" class="btn btn-secondary">
+        <a
+            href="{{ url_for('edit_cv', cv_id=cv.id) }}"
+            class="btn btn-secondary"
+        >
             <i class="fas fa-edit me-2"></i>Edit
         </a>
     </div>
