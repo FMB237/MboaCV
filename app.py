@@ -29,9 +29,21 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(200), nullable=False)
     full_name = db.Column(db.String(100), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    is_admin = db.Column(db.Boolean, default=False)
+    last_login = db.Column(db.DateTime, nullable=True)
+    last_logout = db.Column(db.DateTime, nullable=True)
 
     # Relationship
     cvs = db.relationship('CV', backref='user', lazy=True, cascade='all, delete-orphan')
+    activities = db.relationship('UserActivity', backref='user', lazy=True, cascade='all, delete-orphan')
+
+class UserActivity(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    action = db.Column(db.String(50), nullable=False)  # 'login', 'logout', 'created', 'deleted'
+    ip_address = db.Column(db.String(45), nullable=True)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    details = db.Column(db.Text, nullable=True)
 
 class CV(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -62,6 +74,17 @@ class Template(db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# Admin required decorator
+def admin_required(f):
+    from functools import wraps
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated or not current_user.is_admin:
+            flash('Admin access required.', 'error')
+            return redirect(url_for('index'))
+        return f(*args, **kwargs)
+    return decorated_function
+
 # Initialize default templates
 def init_templates():
     templates = [
@@ -73,6 +96,20 @@ def init_templates():
         if not Template.query.filter_by(name=t['name']).first():
             db.session.add(Template(**t))
     db.session.commit()
+
+# Create initial admin user
+def create_admin_user():
+    admin_email = 'miguelfouenanf@gmail.com'
+    if not User.query.filter_by(email=admin_email).first():
+        admin = User(
+            email=admin_email,
+            password_hash=generate_password_hash('admin123'),
+            full_name='Fouenang Miguel Bruce',
+            is_admin=True
+        )
+        db.session.add(admin)
+        db.session.commit()
+        print(f'Admin user created: {admin_email} / password: admin123')
 
 # Routes
 @app.route('/')
@@ -111,6 +148,16 @@ def register():
         db.session.add(user)
         db.session.commit()
 
+        # Log user creation
+        activity = UserActivity(
+            user_id=user.id,
+            action='created',
+            ip_address=request.remote_addr,
+            details='Account created'
+        )
+        db.session.add(activity)
+        db.session.commit()
+
         flash('Account created successfully! Please log in.', 'success')
         return redirect(url_for('login'))
 
@@ -130,6 +177,16 @@ def login():
 
         if user and check_password_hash(user.password_hash, password):
             login_user(user, remember=remember)
+            # Update last login and log activity
+            user.last_login = datetime.utcnow()
+            activity = UserActivity(
+                user_id=user.id,
+                action='login',
+                ip_address=request.remote_addr,
+                details='User logged in'
+            )
+            db.session.add(activity)
+            db.session.commit()
             next_page = request.args.get('next')
             return redirect(next_page or url_for('dashboard'))
 
@@ -140,6 +197,16 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
+    # Log activity before logout
+    activity = UserActivity(
+        user_id=current_user.id,
+        action='logout',
+        ip_address=request.remote_addr,
+        details='User logged out'
+    )
+    current_user.last_logout = datetime.utcnow()
+    db.session.add(activity)
+    db.session.commit()
     logout_user()
     flash('You have been logged out.', 'info')
     return redirect(url_for('index'))
@@ -353,8 +420,82 @@ def remove_photo(cv_id):
 
     return jsonify({'success': True})
 
+# Admin Routes
+@app.route('/admin')
+@admin_required
+def admin_dashboard():
+    total_users = User.query.count()
+    total_cvs = CV.query.count()
+    recent_users = User.query.order_by(User.created_at.desc()).limit(5).all()
+    recent_activities = UserActivity.query.order_by(UserActivity.timestamp.desc()).limit(10).all()
+    return render_template('admin/dashboard.html',
+                         total_users=total_users,
+                         total_cvs=total_cvs,
+                         recent_users=recent_users,
+                         recent_activities=recent_activities)
+
+@app.route('/admin/users')
+@admin_required
+def admin_users():
+    users = User.query.order_by(User.created_at.desc()).all()
+    return render_template('admin/users.html', users=users)
+
+@app.route('/admin/user/<int:user_id>')
+@admin_required
+def admin_user_detail(user_id):
+    user = User.query.get_or_404(user_id)
+    activities = UserActivity.query.filter_by(user_id=user_id).order_by(UserActivity.timestamp.desc()).all()
+    return render_template('admin/user_detail.html', user=user, activities=activities)
+
+@app.route('/admin/user/<int:user_id>/toggle-admin', methods=['POST'])
+@admin_required
+def admin_toggle_admin(user_id):
+    user = User.query.get_or_404(user_id)
+    if user.id == current_user.id:
+        flash('Cannot modify your own admin status.', 'error')
+        return redirect(url_for('admin_user_detail', user_id=user_id))
+    user.is_admin = not user.is_admin
+    activity = UserActivity(
+        user_id=user.id,
+        action='admin_toggled',
+        ip_address=request.remote_addr,
+        details=f'Admin status changed to {user.is_admin} by {current_user.full_name}'
+    )
+    db.session.add(activity)
+    db.session.commit()
+    flash(f'User {user.full_name} admin status updated.', 'success')
+    return redirect(url_for('admin_user_detail', user_id=user_id))
+
+@app.route('/admin/user/<int:user_id>/delete', methods=['POST'])
+@admin_required
+def admin_delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+    if user.id == current_user.id:
+        flash('Cannot delete your own account.', 'error')
+        return redirect(url_for('admin_users'))
+    # Log deletion before deleting
+    activity = UserActivity(
+        user_id=user.id,
+        action='deleted',
+        ip_address=request.remote_addr,
+        details=f'User deleted by admin {current_user.full_name}'
+    )
+    db.session.add(activity)
+    db.session.commit()
+    db.session.delete(user)
+    db.session.commit()
+    flash(f'User {user.full_name} has been deleted.', 'success')
+    return redirect(url_for('admin_users'))
+
+@app.route('/admin/activities')
+@admin_required
+def admin_activities():
+    activities = UserActivity.query.order_by(UserActivity.timestamp.desc()).all()
+    return render_template('admin/activities.html', activities=activities)
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         init_templates()
+        create_admin_user()
     app.run(debug=True, port=5000)

@@ -1,13 +1,31 @@
-/* Classic Template */
+/* Classic Template - Enhanced with Professional Colors */
 .cv-document {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    --classic-primary: #1e3a5f;
+    --classic-accent: #c9a227;
+    --classic-secondary: #4a6fa5;
+    --classic-text: #2d3748;
+    --classic-muted: #5a6c7d;
+    --classic-border: #d4af37;
 }
 
 .cv-document .cv-header {
     text-align: center;
-    border-bottom: 2px solid #1e293b;
-    padding-bottom: 20px;
+    border-bottom: 3px solid var(--classic-primary);
+    padding-bottom: 25px;
     margin-bottom: 30px;
+    position: relative;
+}
+
+.cv-document .cv-header::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: var(--classic-accent);
 }
 
 .cv-document .cv-header-with-photo {
@@ -21,9 +39,10 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    border: 3px solid #1e293b;
+    border: 4px solid var(--classic-primary);
     overflow: hidden;
     flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(30, 58, 95, 0.2);
 }
 
 .cv-document .cv-photo-container img {
@@ -41,48 +60,145 @@
 }
 
 .cv-document .cv-name {
-    font-size: 28px;
+    font-size: 32px;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    color: var(--classic-primary);
+    font-weight: 700;
+    margin-bottom: 8px;
 }
 
 .cv-document .cv-title {
     font-size: 16px;
     font-style: italic;
+    color: var(--classic-secondary);
+    font-weight: 500;
 }
 
 .cv-document .cv-contact {
     justify-content: center;
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .cv-document .cv-contact span {
     position: relative;
+    color: var(--classic-muted);
+    font-size: 14px;
 }
 
 .cv-document .cv-contact span:not(:last-child)::after {
     content: '|';
-    margin-left: 16px;
-    color: #cbd5e1;
+    margin-left: 12px;
+    color: var(--classic-accent);
+}
+
+.cv-document .cv-contact i {
+    color: var(--classic-primary);
+    margin-right: 6px;
+}
+
+.cv-document .cv-section {
+    margin-bottom: 28px;
 }
 
 .cv-document .cv-section-title {
-    font-size: 14px;
+    font-size: 13px;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    border-bottom: 1px solid #1e293b;
-    padding-bottom: 4px;
-    margin-bottom: 12px;
+    letter-spacing: 3px;
+    border-bottom: 2px solid var(--classic-border);
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    color: var(--classic-primary);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cv-document .cv-section-title::before {
+    content: '◆';
+    color: var(--classic-accent);
+    font-size: 10px;
+}
+
+.cv-document .cv-item {
+    margin-bottom: 18px;
+    padding-left: 20px;
+    border-left: 2px solid var(--classic-border);
+}
+
+.cv-document .cv-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
 }
 
 .cv-document .cv-item-title {
-    font-weight: bold;
+    font-weight: 700;
+    color: var(--classic-primary);
+    font-size: 15px;
+}
+
+.cv-document .cv-item-subtitle {
+    color: var(--classic-secondary);
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
 }
 
 .cv-document .cv-item-date {
     font-style: italic;
+    color: var(--classic-accent);
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.cv-document .cv-item-description {
+    color: var(--classic-text);
+    line-height: 1.7;
+    margin-top: 8px;
 }
 
 .cv-document .cv-skills-list {
-    font-size: 14px;
-    line-height: 1.8;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.cv-document .cv-skill-tag {
+    background: linear-gradient(135deg, var(--classic-primary) 0%, var(--classic-secondary) 100%);
+    color: white;
+    padding: 5px 14px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.cv-document .cv-languages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cv-document .cv-skill-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: #f8f9fa;
+    border-left: 4px solid var(--classic-accent);
+}
+
+.cv-document .cv-skill-name {
+    font-weight: 600;
+    color: var(--classic-primary);
+}
+
+.cv-document .cv-skill-level {
+    color: var(--classic-secondary);
+    font-style: italic;
 }
