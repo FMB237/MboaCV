@@ -521,3 +521,74 @@ main {
         max-width: 100%;
     }
 }
+
+/* Admin Panel Styles */
+.admin-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.admin-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+
+.admin-stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-stat-icon.users {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+}
+
+.admin-stat-icon.cvs {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.admin-stat-icon.activity {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+}
+
+.admin-table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.activity-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.activity-badge.login {
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
+}
+
+.activity-badge.logout {
+    background: rgba(245, 158, 11, 0.1);
+    color: #d97706;
+}
+
+.activity-badge.created {
+    background: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+}
+
+.activity-badge.deleted {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}

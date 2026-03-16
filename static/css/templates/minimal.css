@@ -1,6 +1,11 @@
-/* Minimal Template */
+/* Minimal Template - Enhanced with Subtle Colors */
 .cv-document {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --minimal-primary: #0f766e;
+    --minimal-accent: #f59e0b;
+    --minimal-rose: #e11d48;
+    --minimal-slate: #475569;
+    --minimal-light: #f8fafc;
 }
 
 .cv-document .cv-header {
@@ -17,9 +22,10 @@
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    border: 2px solid #e2e8f0;
+    border: 3px solid var(--minimal-primary);
     overflow: hidden;
     flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.15);
 }
 
 .cv-document .cv-photo-container img {
@@ -47,36 +53,50 @@
 }
 
 .cv-document .cv-name {
-    font-size: 24px;
-    font-weight: 300;
+    font-size: 26px;
+    font-weight: 600;
     letter-spacing: -0.5px;
-    border-top: 2px solid #1e293b;
-    border-bottom: 2px solid #1e293b;
+    border-top: 3px solid var(--minimal-primary);
+    border-bottom: 3px solid var(--minimal-primary);
     padding: 16px 0;
     text-align: center;
+    color: var(--minimal-primary);
 }
 
 .cv-document .cv-title {
     text-align: center;
-    margin-top: 8px;
+    margin-top: 10px;
     font-size: 14px;
-    color: #64748b;
+    color: var(--minimal-slate);
+    font-weight: 500;
 }
 
 .cv-document .cv-contact {
     justify-content: center;
     margin-top: 20px;
     font-size: 13px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.cv-document .cv-contact span {
+    color: var(--minimal-slate);
 }
 
 .cv-document .cv-contact span::before {
     content: '•';
     margin-right: 8px;
-    color: #cbd5e1;
+    color: var(--minimal-accent);
 }
 
 .cv-document .cv-contact span:first-child::before {
     content: none;
+}
+
+.cv-document .cv-contact i {
+    color: var(--minimal-primary);
+    margin-right: 6px;
 }
 
 .cv-document .cv-section {
@@ -84,54 +104,114 @@
 }
 
 .cv-document .cv-section-title {
-    font-size: 11px;
+    font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 3px;
-    color: #94a3b8;
+    letter-spacing: 4px;
+    color: var(--minimal-primary);
     border: none;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cv-document .cv-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--minimal-accent) 0%, transparent 100%);
 }
 
 .cv-document .cv-item {
     margin-bottom: 24px;
+    padding-left: 20px;
+    border-left: 2px solid #e2e8f0;
+    transition: border-color 0.3s;
+}
+
+.cv-document .cv-item:hover {
+    border-left-color: var(--minimal-rose);
+}
+
+.cv-document .cv-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
 }
 
 .cv-document .cv-item-title {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 15px;
+    color: var(--minimal-primary);
 }
 
 .cv-document .cv-item-subtitle {
-    color: #64748b;
+    color: var(--minimal-slate);
     font-size: 13px;
     margin-bottom: 4px;
+    font-weight: 500;
 }
 
 .cv-document .cv-item-date {
     font-size: 12px;
-    color: #94a3b8;
+    color: var(--minimal-rose);
     margin-bottom: 8px;
+    font-weight: 500;
 }
 
 .cv-document .cv-item-description {
     font-size: 13px;
     line-height: 1.7;
-    color: #475569;
+    color: var(--minimal-slate);
 }
 
 .cv-document .cv-skills-list {
-    gap: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .cv-document .cv-skill-tag {
-    background: transparent;
-    border: 1px solid #e2e8f0;
-    border-radius: 4px;
-    padding: 4px 12px;
+    background: white;
+    border: 2px solid var(--minimal-primary);
+    border-radius: 20px;
+    padding: 6px 16px;
     font-size: 12px;
-    color: #64748b;
+    color: var(--minimal-primary);
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.cv-document .cv-skill-tag:hover {
+    background: var(--minimal-primary);
+    color: white;
+}
+
+.cv-document .cv-languages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .cv-document .cv-skill-item {
-    border-bottom-color: #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--minimal-light);
+    border-radius: 8px;
+    border-left: 3px solid var(--minimal-accent);
+}
+
+.cv-document .cv-skill-name {
+    font-weight: 600;
+    color: var(--minimal-primary);
+}
+
+.cv-document .cv-skill-level {
+    color: var(--minimal-rose);
+    font-size: 13px;
+    font-weight: 500;
 }
